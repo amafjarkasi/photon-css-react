@@ -34,7 +34,7 @@ export const Home = () => {
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => handleClick("home")}>
+									onClick={() => setCount("home")}>
 									<span className="icon icon-home"></span>
 								</button>
 								<button
@@ -43,7 +43,7 @@ export const Home = () => {
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => handleClick("folder")}>
+									onClick={() => setCount("folder")}>
 									<span className="icon icon-folder"></span>
 								</button>
 								<button
@@ -52,7 +52,7 @@ export const Home = () => {
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => handleClick("cloud")}>
+									onClick={() => setCount("cloud")}>
 									<span className="icon icon-cloud"></span>
 								</button>
 								<button className="btn btn-default">
@@ -77,7 +77,9 @@ export const Home = () => {
 								<div className="pane-sm sidebar">
 									<ListFiles />
 								</div>
-								<div className="pane"></div>
+								<div className="pane py-3">
+									{count == "folder" && <Block />}
+								</div>
 							</div>
 						</div>
 						<footer className="toolbar toolbar-footer">
