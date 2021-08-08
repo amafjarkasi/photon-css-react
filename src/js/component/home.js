@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
 import React, { useEffect } from "react";
 import useState from "react-hook-use-state";
 import ReactDOM from "react-dom";
@@ -5,7 +7,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //create your first component
 export const Home = () => {
-	const [count, setCount] = useState("Home");
+	const [count, setCount] = useState("home");
+	let _ = require("lodash");
 
 	// useEffect(() => {
 	// 	const handleClick = page => {
@@ -25,7 +28,7 @@ export const Home = () => {
 			<>
 				<div className="window">
 					<header className="toolbar toolbar-header">
-						<h1 className="title pt-1">{count}</h1>
+						<h1 className="title pt-1">{_.startCase(count)}</h1>
 						<div className="toolbar-actions">
 							<div className="btn-group">
 								<button
@@ -91,9 +94,14 @@ export const Home = () => {
 		);
 	}
 
+	function handleClick(event) {
+		event.preventDefault();
+		console.log("worked");
+	}
+
 	function Block() {
 		return (
-			<>
+			<div className="mx-5">
 				<form>
 					<div className="form-group">
 						<label>Email address</label>
@@ -150,17 +158,19 @@ export const Home = () => {
 					<div className="form-actions">
 						<button
 							type="submit"
+							onClick={e => handleClick(e)}
 							className="btn btn-form btn-default">
 							Cancel
 						</button>
 						<button
 							type="submit"
+							onClick={e => handleClick(e)}
 							className="btn btn-form btn-primary">
 							OK
 						</button>
 					</div>
 				</form>
-			</>
+			</div>
 		);
 	}
 
@@ -274,7 +284,11 @@ export const Home = () => {
 				</thead>
 				<tbody>
 					<tr>
-						<td>photon.css</td>
+						<td
+							className="btn-default active"
+							onClick={e => handleClick(e)}>
+							photon.css
+						</td>
 					</tr>
 					<tr>
 						<td>photon.css</td>
@@ -333,18 +347,16 @@ export const Home = () => {
 
 	return (
 		<>
-			<html>
-				<head>
-					<title>Photon</title>
-					<link rel="stylesheet" href="../../styles/css/photon.css" />
-					<script src="js/menu.js" charset="utf-8"></script>
-				</head>
-				<body className="w-75 h-75">
-					<div className="window">
-						<SideBar />
-					</div>
-				</body>
-			</html>
+			<head>
+				<title>Photon</title>
+				<link rel="stylesheet" href="../../styles/css/photon.css" />
+				<script src="js/menu.js" charSet="utf-8"></script>
+			</head>
+			<body className="w-75 h-75">
+				<div className="window">
+					<SideBar />
+				</div>
+			</body>
 		</>
 	);
 };
