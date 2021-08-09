@@ -2,60 +2,53 @@
 /* eslint-disable no-console */
 import React, { useEffect } from "react";
 import useState from "react-hook-use-state";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Block } from "./block";
 
-//create your first component
+export const handleClicker = e => {
+	e.preventDefault();
+	console.log("worked");
+};
+
 export const Home = () => {
-	const [count, setCount] = useState("home");
+	const [navigation, setNavigation] = useState("home");
 	let _ = require("lodash");
 
-	// useEffect(() => {
-	// 	const handleClick = page => {
-	// 		// e.preventDefault();
-	// 		setCount("${page}");
-	// 	};
-	// }),
-	// 	[count];
-
 	function SideBar() {
-		function handleClick(page) {
-			// e.preventDefault();
-			setCount("${page}");
-		}
-
 		return (
 			<>
 				<div className="window">
-					<header className="toolbar toolbar-header">
-						<h1 className="title pt-1">{_.startCase(count)}</h1>
+					<header className="toolbar toolbar-header pb-1">
+						<h1 className="title pt-2 fw-bold">
+							{_.startCase(navigation)}
+						</h1>
 						<div className="toolbar-actions">
 							<div className="btn-group">
 								<button
 									className={
-										count == "home"
+										navigation == "home"
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => setCount("home")}>
+									onClick={() => setNavigation("home")}>
 									<span className="icon icon-home"></span>
 								</button>
 								<button
 									className={
-										count == "folder"
+										navigation == "folder"
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => setCount("folder")}>
+									onClick={() => setNavigation("folder")}>
 									<span className="icon icon-folder"></span>
 								</button>
 								<button
 									className={
-										count == "cloud"
+										navigation == "cloud"
 											? `btn btn-default active`
 											: `btn btn-default`
 									}
-									onClick={() => setCount("cloud")}>
+									onClick={() => setNavigation("cloud")}>
 									<span className="icon icon-cloud"></span>
 								</button>
 								<button className="btn btn-default">
@@ -81,7 +74,9 @@ export const Home = () => {
 									<ListFiles />
 								</div>
 								<div className="pane py-3">
-									{count == "folder" && <Block />}
+									{navigation == "home" && <ListGroup />}
+									{navigation == "folder" && <Block />}
+									{navigation == "cloud" && <Block />}
 								</div>
 							</div>
 						</div>
@@ -91,86 +86,6 @@ export const Home = () => {
 					</div>
 				</div>
 			</>
-		);
-	}
-
-	function handleClick(event) {
-		event.preventDefault();
-		console.log("worked");
-	}
-
-	function Block() {
-		return (
-			<div className="mx-5">
-				<form>
-					<div className="form-group">
-						<label>Email address</label>
-						<input
-							type="email"
-							className="form-control"
-							placeholder="Email"
-						/>
-					</div>
-					<div className="form-group">
-						<label>Password</label>
-						<input
-							type="password"
-							className="form-control"
-							placeholder="Password"
-						/>
-					</div>
-					<div className="form-group">
-						<label>Description</label>
-						<textarea className="form-control" rows="3"></textarea>
-					</div>
-					<select className="form-control">
-						<option>Option one</option>
-						<option>Option two</option>
-						<option>Option three</option>
-						<option>Option four</option>
-						<option>Option five</option>
-						<option>Option six</option>
-						<option>Option seven</option>
-						<option>Option eight</option>
-					</select>
-					<div className="checkbox">
-						<label>
-							<input type="checkbox" /> This is a checkbox
-						</label>
-					</div>
-					<div className="checkbox">
-						<label>
-							<input type="checkbox" /> This is a checkbox too
-						</label>
-					</div>
-					<div className="radio">
-						<label>
-							<input type="radio" name="radios" checked />
-							Keep your options open
-						</label>
-					</div>
-					<div className="radio">
-						<label>
-							<input type="radio" name="radios" />
-							Be sure to remember to check for unknown unknowns
-						</label>
-					</div>
-					<div className="form-actions">
-						<button
-							type="submit"
-							onClick={e => handleClick(e)}
-							className="btn btn-form btn-default">
-							Cancel
-						</button>
-						<button
-							type="submit"
-							onClick={e => handleClick(e)}
-							className="btn btn-form btn-primary">
-							OK
-						</button>
-					</div>
-				</form>
-			</div>
 		);
 	}
 
@@ -215,29 +130,29 @@ export const Home = () => {
 						<div className="btn-group">
 							<button
 								className={
-									count == "home"
+									navigation == "home"
 										? `btn btn-default active`
 										: `btn btn-default`
 								}
-								onClick={setCount("home")}>
+								onClick={setNavigation("home")}>
 								<span className="icon icon-home"></span>
 							</button>
 							<button
 								className={
-									count == "folder"
+									navigation == "folder"
 										? `btn btn-default active`
 										: `btn btn-default`
 								}
-								onClick={setCount("folder")}>
+								onClick={setNavigation("folder")}>
 								<span className="icon icon-folder"></span>
 							</button>
 							<button
 								className={
-									count == "cloud"
+									navigation == "cloud"
 										? `btn btn-default active`
 										: `btn btn-default`
 								}
-								onClick={setCount("cloud")}>
+								onClick={setNavigation("cloud")}>
 								<span className="icon icon-cloud"></span>
 							</button>
 							<button className="btn btn-default">
@@ -258,7 +173,6 @@ export const Home = () => {
 						</button>
 					</div>
 				</header>
-				{/* <Block /> */}
 				<footer className="toolbar toolbar-footer">
 					<div className="toolbar-actions">
 						<button className="btn btn-default">Cancel</button>
@@ -272,7 +186,7 @@ export const Home = () => {
 	}
 
 	// function changeHandles(e) {
-	// 	return setCount(e.target.value);
+	// 	return setNavigation(e.target.value);
 	// }
 	function ListFiles() {
 		return (
@@ -312,14 +226,14 @@ export const Home = () => {
 						className="form-control"
 						type="text"
 						placeholder="Search for someone"
-						// value={count}
-						// onChange={event => setCount(event.target.value)}
+						// value={navigation}
+						// onChange={event => setNavigation(event.target.value)}
 					/>
 				</li>
 				<li className="list-group-item">
 					<img
 						className="img-circle media-object pull-left"
-						src="../../styles/img/avatar3.jpg"
+						src="http://photonkit.com/assets/img/avatar.jpg"
 						width="32"
 						height="32"
 					/>
@@ -331,7 +245,7 @@ export const Home = () => {
 				<li className="list-group-item">
 					<img
 						className="img-circle media-object pull-left"
-						src="../../styles/img/avatar2.png"
+						src="http://photonkit.com/assets/img/avatar.jpg"
 						width="32"
 						height="32"
 					/>
@@ -347,16 +261,19 @@ export const Home = () => {
 
 	return (
 		<>
-			<head>
+			<Helmet>
 				<title>Photon</title>
-				<link rel="stylesheet" href="../../styles/css/photon.css" />
-				<script src="js/menu.js" charSet="utf-8"></script>
-			</head>
-			<body className="w-75 h-75">
+				<link
+					rel="stylesheet"
+					href="https://cdn.jsdelivr.net/npm/photonkit@0.1.2/dist/css/photon.css"
+				/>
+				{/* <script src="../../js/menu.js" charSet="utf-8"></script> */}
+			</Helmet>
+			<div className="w-75 h-75">
 				<div className="window">
 					<SideBar />
 				</div>
-			</body>
+			</div>
 		</>
 	);
 };
